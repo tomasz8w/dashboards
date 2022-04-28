@@ -1,12 +1,13 @@
-import { Box, Typography } from "@mui/material";
 import { BrowserRouter as Router } from "react-router-dom";
+
+import Titlebar from "./App/Titlebar";
+import DashboardView from "./Views/DashboardView";
 
 function App() {
   return (
     <Router>
-      <Box>
-        <Typography variant="h3">Dashboard app</Typography>
-      </Box>
+      <Titlebar />
+      <DashboardView />
     </Router>
   );
 }
