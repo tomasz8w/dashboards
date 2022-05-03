@@ -19,6 +19,7 @@ type ListState = {
   deleteList: (listId: number) => void;
   changeListTitle: (listId: number, newTitle: string) => void;
   addCard: (listId: number, title: string) => void;
+  getCard: (listId: number, cardId: number) => Card | undefined;
 };
 
 export const useDashboardStore = create<ListState>((set, get) => ({
@@ -64,4 +65,8 @@ export const useDashboardStore = create<ListState>((set, get) => ({
         } else return list;
       }),
     })),
+  getCard: (listId, cardId) =>
+    get()
+      .getList(listId)
+      ?.cards.find((card) => card.id === cardId),
 }));

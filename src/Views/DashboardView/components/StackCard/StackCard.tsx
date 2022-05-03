@@ -25,6 +25,7 @@ const StackCard = ({ listId }: Props) => {
         flexDirection: "column",
         p: 1,
         flex: "auto",
+        minWidth: "200px",
         maxWidth: "300px",
         justifyContent: "center",
       }}
@@ -42,7 +43,7 @@ const StackCard = ({ listId }: Props) => {
             }}
           >
             {list.cards.map((card) => (
-              <Card key={card.title} title={card.title} />
+              <Card key={card.id} listId={listId} cardId={card.id} />
             ))}
 
             <Button startIcon={<AddIcon />} onClick={handleAddCard}>
