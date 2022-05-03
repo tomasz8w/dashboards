@@ -17,8 +17,10 @@ const DashboardView = () => {
       <Box
         sx={{
           display: "flex",
+          p: 1,
           gap: 1,
           alignItems: "baseline",
+          overflowX: "auto",
         }}
       >
         {lists?.map((list) => (

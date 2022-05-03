@@ -103,7 +103,7 @@ const StackCardHeader = ({ title, listId }: Props) => {
           Rename
         </MenuItem>
         <MenuItem onClick={handleDeleteList}>
-          <DeleteIcon sx={{ mr: 1 }} />
+          <DeleteIcon sx={{ mr: 1, color: "error.main" }} />
           Delete
         </MenuItem>
       </Menu>
