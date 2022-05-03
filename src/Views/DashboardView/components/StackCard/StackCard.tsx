@@ -2,15 +2,21 @@ import { Box, Button, IconButton, Paper, Typography } from "@mui/material";
 import { MoreVert as MoreIcon, Add as AddIcon } from "@mui/icons-material";
 import Card from "../Card";
 import StackCardHeader from "./StackCardHeader";
-
-import { CardProps } from "../Card/CardProps";
+import { useDashboardStore } from "stores/dashboardStore";
 
 type Props = {
-  title: string;
-  cards: CardProps[];
+  listId: number;
 };
 
-const StackCard = ({ title, cards }: Props) => {
+const StackCard = ({ listId }: Props) => {
+  const { getList, addCard } = useDashboardStore();
+
+  const list = getList(listId);
+
+  const handleAddCard = () => {
+    addCard(listId, "New card");
+  };
+
   return (
     <Paper
       elevation={2}
@@ -23,22 +29,28 @@ const StackCard = ({ title, cards }: Props) => {
         justifyContent: "center",
       }}
     >
-      <StackCardHeader title={title} />
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 0.5,
-          p: 1,
-          alignItems: "center",
-        }}
-      >
-        {cards.map((card) => (
-          <Card key={card.title} title={card.title} />
-        ))}
+      {list && (
+        <>
+          <StackCardHeader title={list.title} listId={listId} />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 0.5,
+              p: 1,
+              alignItems: "center",
+            }}
+          >
+            {list.cards.map((card) => (
+              <Card key={card.title} title={card.title} />
+            ))}
 
-        <Button startIcon={<AddIcon />}>New card</Button>
-      </Box>
+            <Button startIcon={<AddIcon />} onClick={handleAddCard}>
+              New card
+            </Button>
+          </Box>
+        </>
+      )}
     </Paper>
   );
 };

@@ -11,6 +11,7 @@ const Card = ({ title }: Props) => (
     onMouseOver={() => console.log("hover")}
     sx={{
       display: "flex",
+      alignItems: "center",
       justifyContent: "space-between",
       ":hover": {
         backgroundColor: "action.hover",
@@ -27,7 +28,7 @@ const Card = ({ title }: Props) => (
     }}
   >
     <Typography>{title}</Typography>
-    <EditIcon />
+    <EditIcon sx={{ fontSize: "1.2rem" }} />
   </Paper>
 );
 

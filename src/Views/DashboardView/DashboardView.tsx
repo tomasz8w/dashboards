@@ -3,24 +3,15 @@ import { Add as AddIcon } from "@mui/icons-material";
 
 import ViewContainer from "App/ViewContainer";
 import StackCard from "./components/StackCard";
-
-const lists = [
-  {
-    title: "List first",
-    cards: [{ title: "Karta 1 listy 1" }, { title: "Karta 2" }],
-  },
-  {
-    title: "List second",
-    cards: [
-      { title: "Karta 1 listy 2" },
-      { title: "Karta 2" },
-      { title: "Karta 3" },
-      { title: "Karta x" },
-    ],
-  },
-];
+import { useDashboardStore } from "stores/dashboardStore";
 
 const DashboardView = () => {
+  const { lists, createList, addCard } = useDashboardStore();
+
+  const handleCreateList = () => {
+    createList("New List");
+  };
+
   return (
     <ViewContainer>
       <Box
@@ -30,11 +21,13 @@ const DashboardView = () => {
           alignItems: "baseline",
         }}
       >
-        {lists.map((list) => (
-          <StackCard key={list.title} title={list.title} cards={list.cards} />
+        {lists?.map((list) => (
+          <StackCard key={list.id} listId={list.id} />
         ))}
 
-        <Button startIcon={<AddIcon />}>New list</Button>
+        <Button onClick={handleCreateList} startIcon={<AddIcon />}>
+          New list
+        </Button>
       </Box>
     </ViewContainer>
   );
