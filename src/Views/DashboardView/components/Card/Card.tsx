@@ -7,8 +7,8 @@ import { useDashboardStore } from 'stores/dashboardStore';
 import CardModal from '../CardModal';
 
 type Props = {
-  listId: number;
-  cardId: number;
+  listId: string;
+  cardId: string;
 };
 
 const Card = ({ listId, cardId }: Props) => {

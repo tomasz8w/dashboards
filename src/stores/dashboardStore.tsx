@@ -1,27 +1,28 @@
 /* eslint-disable import/prefer-default-export */
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
+import { uid } from 'react-uid';
 
 type Card = {
-  id: number;
+  id: string;
   title: string;
   creationDate: number;
 };
 
 type List = {
-  id: number;
+  id: string;
   title: string;
   cards: Card[];
 };
 
 type ListState = {
   lists: List[];
-  getList: (listId: number) => List | undefined;
+  getList: (listId: string) => List | undefined;
   createList: (title: string) => void;
-  deleteList: (listId: number) => void;
-  changeListTitle: (listId: number, newTitle: string) => void;
-  addCard: (listId: number, title: string) => void;
-  getCard: (listId: number, cardId: number) => Card | undefined;
+  deleteList: (listId: string) => void;
+  changeListTitle: (listId: string, newTitle: string) => void;
+  addCard: (listId: string, title: string) => void;
+  getCard: (listId: string, cardId: string) => Card | undefined;
 };
 
 export const useDashboardStore = create<ListState>(
@@ -34,7 +35,7 @@ export const useDashboardStore = create<ListState>(
           lists: [
             ...state.lists,
             {
-              id: Math.floor(Math.random() * 1000),
+              id: uid(`${title}_${state.lists.length}`),
               title,
               cards: [],
             } as List,
@@ -65,7 +66,7 @@ export const useDashboardStore = create<ListState>(
                 cards: [
                   ...list.cards,
                   {
-                    id: Math.floor(Math.random() * 1000),
+                    id: uid(`${listId}_${title}_${list.cards.length}`),
                     title,
                     creationDate: Date.now(),
                   },

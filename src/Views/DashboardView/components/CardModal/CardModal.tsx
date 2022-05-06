@@ -5,8 +5,8 @@ import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { useDashboardStore } from 'stores/dashboardStore';
 
 type ModalProps = {
-  listId: number;
-  cardId: number;
+  listId: string;
+  cardId: string;
 };
 
 export default NiceModal.create(({ listId, cardId }: ModalProps) => {

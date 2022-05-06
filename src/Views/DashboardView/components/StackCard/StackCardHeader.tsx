@@ -19,7 +19,7 @@ import { useDashboardStore } from 'stores/dashboardStore';
 
 type Props = {
   title: string;
-  listId: number;
+  listId: string;
 };
 
 const StackCardHeader = ({ title, listId }: Props) => {

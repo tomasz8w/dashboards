@@ -8,7 +8,7 @@ import Card from '../Card';
 import StackCardHeader from './StackCardHeader';
 
 type Props = {
-  listId: number;
+  listId: string;
 };
 
 const StackCard = ({ listId }: Props) => {
