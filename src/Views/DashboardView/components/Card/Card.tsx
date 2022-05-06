@@ -1,6 +1,8 @@
-import { Paper, Typography } from "@mui/material";
-import { Edit as EditIcon } from "@mui/icons-material";
-import { useDashboardStore } from "stores/dashboardStore";
+import React from 'react';
+
+import { Edit as EditIcon } from '@mui/icons-material';
+import { Paper, Typography } from '@mui/material';
+import { useDashboardStore } from 'stores/dashboardStore';
 
 type Props = {
   listId: number;
@@ -16,27 +18,27 @@ const Card = ({ listId, cardId }: Props) => {
     <Paper
       component="div"
       sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        ":hover": {
-          backgroundColor: "action.hover",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        ':hover': {
+          backgroundColor: 'action.hover',
           svg: {
-            display: "inline",
+            display: 'inline',
           },
         },
         svg: {
-          display: "none",
+          display: 'none',
         },
-        width: "100%",
+        width: '100%',
         p: 1,
-        backgroundColor: "action.disabledBackground",
+        backgroundColor: 'action.disabledBackground',
       }}
     >
       <Typography>
         {card?.title}, id: {card?.id}
       </Typography>
-      <EditIcon sx={{ fontSize: "1.2rem" }} />
+      <EditIcon sx={{ fontSize: '1.2rem' }} />
     </Paper>
   );
 };

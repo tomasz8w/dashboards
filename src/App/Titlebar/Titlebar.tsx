@@ -1,23 +1,23 @@
-import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
-import { Menu as MenuIcon } from "@mui/icons-material";
+import React from 'react';
 
-const Titlebar = () => {
-  return (
-    <AppBar position="static">
-      <Toolbar>
-        <IconButton
-          color="inherit"
-          size="large"
-          edge="start"
-          aria-label="menu"
-          sx={{ mr: 2 }}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h6">Dashboards</Typography>
-      </Toolbar>
-    </AppBar>
-  );
-};
+import { Menu as MenuIcon } from '@mui/icons-material';
+import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
+
+const Titlebar = () => (
+  <AppBar position="static">
+    <Toolbar>
+      <IconButton
+        color="inherit"
+        size="large"
+        edge="start"
+        aria-label="menu"
+        sx={{ mr: 2 }}
+      >
+        <MenuIcon />
+      </IconButton>
+      <Typography variant="h6">Dashboards</Typography>
+    </Toolbar>
+  </AppBar>
+);
 
 export default Titlebar;

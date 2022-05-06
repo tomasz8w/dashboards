@@ -1,4 +1,12 @@
-import { useState } from "react";
+import React, { useState } from 'react';
+
+import {
+  Check as CheckIcon,
+  Clear as ClearIcon,
+  MoreVert as MoreIcon,
+  Edit as EditIcon,
+  Delete as DeleteIcon,
+} from '@mui/icons-material';
 import {
   Box,
   IconButton,
@@ -6,16 +14,8 @@ import {
   MenuItem,
   TextField,
   Typography,
-} from "@mui/material";
-import {
-  Check as CheckIcon,
-  Clear as ClearIcon,
-  MoreVert as MoreIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-} from "@mui/icons-material";
-
-import { useDashboardStore } from "stores/dashboardStore";
+} from '@mui/material';
+import { useDashboardStore } from 'stores/dashboardStore';
 
 type Props = {
   title: string;
@@ -26,7 +26,7 @@ const StackCardHeader = ({ title, listId }: Props) => {
   const { deleteList, changeListTitle } = useDashboardStore();
   const [anchorEl, setAnchorEl] = useState(null);
   const [editMode, setEditMode] = useState(false);
-  const [titleText, setTitleText] = useState("");
+  const [titleText, setTitleText] = useState('');
 
   const handleOpenMenu = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -55,11 +55,11 @@ const StackCardHeader = ({ title, listId }: Props) => {
   return (
     <Box
       sx={{
-        display: "flex",
-        flex: "auto",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
+        display: 'flex',
+        flex: 'auto',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
       }}
     >
       {editMode ? (
@@ -89,12 +89,12 @@ const StackCardHeader = ({ title, listId }: Props) => {
         onClose={handleCloseMenu}
         anchorEl={anchorEl}
         anchorOrigin={{
-          horizontal: "right",
-          vertical: "bottom",
+          horizontal: 'right',
+          vertical: 'bottom',
         }}
         transformOrigin={{
-          horizontal: "right",
-          vertical: "top",
+          horizontal: 'right',
+          vertical: 'top',
         }}
         onClick={handleCloseMenu}
       >
@@ -103,7 +103,7 @@ const StackCardHeader = ({ title, listId }: Props) => {
           Rename
         </MenuItem>
         <MenuItem onClick={handleDeleteList}>
-          <DeleteIcon sx={{ mr: 1, color: "error.main" }} />
+          <DeleteIcon sx={{ mr: 1, color: 'error.main' }} />
           Delete
         </MenuItem>
       </Menu>

@@ -1,5 +1,5 @@
-import create from "zustand";
-import produce from "immer";
+/* eslint-disable import/prefer-default-export */
+import create from 'zustand';
 
 type Card = {
   id: number;
@@ -48,7 +48,8 @@ export const useDashboardStore = create<ListState>((set, get) => ({
             ...list,
             title: newTitle,
           };
-        } else return list;
+        }
+        return list;
       }),
     })),
   addCard: (listId, title) =>
@@ -62,7 +63,8 @@ export const useDashboardStore = create<ListState>((set, get) => ({
               { id: Math.floor(Math.random() * 1000), title },
             ],
           };
-        } else return list;
+        }
+        return list;
       }),
     })),
   getCard: (listId, cardId) =>
