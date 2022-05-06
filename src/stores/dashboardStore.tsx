@@ -5,6 +5,7 @@ import { persist } from 'zustand/middleware';
 type Card = {
   id: number;
   title: string;
+  creationDate: number;
 };
 
 type List = {
@@ -63,7 +64,11 @@ export const useDashboardStore = create<ListState>(
                 ...list,
                 cards: [
                   ...list.cards,
-                  { id: Math.floor(Math.random() * 1000), title },
+                  {
+                    id: Math.floor(Math.random() * 1000),
+                    title,
+                    creationDate: Date.now(),
+                  },
                 ],
               };
             }
