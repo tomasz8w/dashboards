@@ -1,9 +1,10 @@
 import React from 'react';
-import NiceModal from '@ebay/nice-modal-react';
 
+import NiceModal from '@ebay/nice-modal-react';
 import { Edit as EditIcon } from '@mui/icons-material';
 import { ButtonBase, Paper, Typography } from '@mui/material';
 import { useDashboardStore } from 'stores/dashboardStore';
+
 import CardModal from '../CardModal';
 
 type Props = {
