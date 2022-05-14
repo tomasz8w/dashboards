@@ -1,7 +1,8 @@
 /* eslint-disable import/prefer-default-export */
+import { uid } from 'react-uid';
+
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
-import { uid } from 'react-uid';
 
 type Card = {
   id: string;
