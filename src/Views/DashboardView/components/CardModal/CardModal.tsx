@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { Modal, Paper, Typography } from '@mui/material';
+import { Box, Modal, Paper, Typography } from '@mui/material';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { useDashboardStore } from 'stores/dashboardStore';
+import EditableTextField from 'App/EditableTextField';
 
 type ModalProps = {
   listId: string;
@@ -10,8 +11,8 @@ type ModalProps = {
 };
 
 export default NiceModal.create(({ listId, cardId }: ModalProps) => {
-  const { getCard } = useDashboardStore();
-
+  const modal = useModal();
+  const { getCard, changeCardTitle } = useDashboardStore();
   const card = getCard(listId, cardId);
 
   if (!card) return null;
@@ -21,7 +22,6 @@ export default NiceModal.create(({ listId, cardId }: ModalProps) => {
     return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
   };
 
-  const modal = useModal();
   return (
     <Modal
       open={modal.visible}
@@ -36,9 +36,14 @@ export default NiceModal.create(({ listId, cardId }: ModalProps) => {
       }}
     >
       <Paper sx={{ flex: 1, p: 1 }}>
-        <Typography variant="h5" sx={{ textAlign: 'left' }}>
-          {card.title}
-        </Typography>
+        <Box sx={{ display: 'flex' }}>
+          <EditableTextField
+            onEdited={(newTitle: string) =>
+              changeCardTitle(listId, cardId, newTitle)
+            }
+            text={card.title}
+          />
+        </Box>
 
         <Typography variant="caption">
           {`Data utworzenia: ${creationDate()}`}
