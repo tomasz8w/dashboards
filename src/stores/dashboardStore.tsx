@@ -8,6 +8,7 @@ type Card = {
   id: string;
   title: string;
   creationDate: number;
+  description: string;
 };
 
 type List = {
@@ -25,6 +26,11 @@ type ListState = {
   addCard: (listId: string, title: string) => void;
   getCard: (listId: string, cardId: string) => Card | undefined;
   changeCardTitle: (listId: string, cardId: string, newTitle: string) => void;
+  changeCardDescription: (
+    listId: string,
+    cardId: string,
+    newDescription: string
+  ) => void;
 };
 
 export const useDashboardStore = create<ListState>(
@@ -71,6 +77,7 @@ export const useDashboardStore = create<ListState>(
                     id: uid(`${listId}_${title}_${list.cards.length}`),
                     title,
                     creationDate: Date.now(),
+                    description: '',
                   },
                 ],
               };
@@ -93,6 +100,26 @@ export const useDashboardStore = create<ListState>(
                     return {
                       ...card,
                       title: newTitle,
+                    };
+                  }
+                  return card;
+                }),
+              };
+            }
+            return list;
+          }),
+        })),
+      changeCardDescription: (listId, cardId, newDescription) =>
+        set((state) => ({
+          lists: state.lists.map((list) => {
+            if (list.id === listId) {
+              return {
+                ...list,
+                cards: list.cards.map((card) => {
+                  if (card.id === cardId) {
+                    return {
+                      ...card,
+                      description: newDescription,
                     };
                   }
                   return card;

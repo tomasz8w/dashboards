@@ -1,9 +1,11 @@
 import React from 'react';
 
-import { Box, Modal, Paper, Typography } from '@mui/material';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
+import { Box, Modal, Paper, Typography } from '@mui/material';
 import { useDashboardStore } from 'stores/dashboardStore';
-import EditableTextField from 'App/EditableTextField';
+
+import CardModalDescription from './CardModalDescription';
+import CardModalHeader from './CardModalHeader';
 
 type ModalProps = {
   listId: string;
@@ -12,7 +14,7 @@ type ModalProps = {
 
 export default NiceModal.create(({ listId, cardId }: ModalProps) => {
   const modal = useModal();
-  const { getCard, changeCardTitle } = useDashboardStore();
+  const { getCard } = useDashboardStore();
   const card = getCard(listId, cardId);
 
   if (!card) return null;
@@ -24,11 +26,12 @@ export default NiceModal.create(({ listId, cardId }: ModalProps) => {
 
   return (
     <Modal
+      disableEscapeKeyDown
       open={modal.visible}
       onClose={modal.remove}
       sx={{
         width: '40%',
-        height: '70%',
+        height: '50%',
         top: '15%',
         left: '30%',
         display: 'flex',
@@ -36,18 +39,13 @@ export default NiceModal.create(({ listId, cardId }: ModalProps) => {
       }}
     >
       <Paper sx={{ flex: 1, p: 1 }}>
-        <Box sx={{ display: 'flex' }}>
-          <EditableTextField
-            onEdited={(newTitle: string) =>
-              changeCardTitle(listId, cardId, newTitle)
-            }
-            text={card.title}
-          />
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <CardModalHeader listId={listId} cardId={cardId} />
+          <CardModalDescription listId={listId} cardId={cardId} />
+          <Typography sx={{ ml: 'auto', px: 3 }} variant="caption">
+            {`Data utworzenia: ${creationDate()}`}
+          </Typography>
         </Box>
-
-        <Typography variant="caption">
-          {`Data utworzenia: ${creationDate()}`}
-        </Typography>
       </Paper>
     </Modal>
   );

@@ -1,18 +1,24 @@
 import React, { useRef, useState } from 'react';
 
-import { InputBase } from '@mui/material';
+import { InputBase, InputProps } from '@mui/material';
 
-type Props = {
+type Props = InputProps & {
   text: string;
   onEdited: (newValue: string) => void;
 };
 
-const EditableTextField = ({ text, onEdited }: Props) => {
+const EditableTextField = ({
+  text,
+  multiline = false,
+  onEdited,
+  sx,
+  ...other
+}: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState(text);
 
   const onClick = () => {
-    if (inputRef) {
+    if (inputRef && !multiline) {
       setTimeout(() => {
         inputRef.current?.focus();
         inputRef.current?.setSelectionRange(0, value.length);
@@ -33,7 +39,7 @@ const EditableTextField = ({ text, onEdited }: Props) => {
   const handleKeyPressed = (
     event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    if (event.key === 'Enter') {
+    if (!multiline && event.key === 'Enter') {
       handleEditEnd();
     }
     if (event.key === 'Escape') {
@@ -52,6 +58,10 @@ const EditableTextField = ({ text, onEdited }: Props) => {
       }}
       onBlur={handleEditEnd}
       onKeyDown={handleKeyPressed}
+      multiline
+      sx={{ ...sx }}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...other}
     />
   );
 };
