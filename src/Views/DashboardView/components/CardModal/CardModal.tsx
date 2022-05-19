@@ -15,7 +15,7 @@ type ModalProps = {
 export default NiceModal.create(({ listId, cardId }: ModalProps) => {
   const modal = useModal();
   const { getCard } = useDashboardStore();
-  const card = getCard(listId, cardId);
+  const card = getCard(cardId);
 
   if (!card) return null;
 
@@ -41,7 +41,7 @@ export default NiceModal.create(({ listId, cardId }: ModalProps) => {
       <Paper sx={{ flex: 1, p: 1 }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <CardModalHeader listId={listId} cardId={cardId} />
-          <CardModalDescription listId={listId} cardId={cardId} />
+          <CardModalDescription cardId={cardId} />
           <Typography sx={{ ml: 'auto', px: 3 }} variant="caption">
             {`Data utworzenia: ${creationDate()}`}
           </Typography>

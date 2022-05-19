@@ -7,12 +7,11 @@ import { useDashboardStore } from 'stores/dashboardStore';
 
 type Props = {
   cardId: string;
-  listId: string;
 };
-const CardModalHeader = ({ cardId, listId }: Props) => {
+const CardModalHeader = ({ cardId }: Props) => {
   const { changeCardDescription, getCard } = useDashboardStore();
 
-  const card = getCard(listId, cardId);
+  const card = getCard(cardId);
 
   if (!card) return null;
 
@@ -29,7 +28,7 @@ const CardModalHeader = ({ cardId, listId }: Props) => {
         rows={10}
         sx={{ mx: 3, p: 1, backgroundColor: '#F6F4F5' }}
         onEdited={(newDescription: string) =>
-          changeCardDescription(listId, cardId, newDescription)
+          changeCardDescription(cardId, newDescription)
         }
         text={card.description}
       />

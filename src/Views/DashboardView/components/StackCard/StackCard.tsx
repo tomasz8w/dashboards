@@ -13,10 +13,11 @@ type Props = {
 };
 
 const StackCard = ({ listId }: Props) => {
-  const { getList, addCard, swapListOrder } = useDashboardStore();
+  const { getList, addCard, swapListOrder, getListCards } = useDashboardStore();
   const ref = useRef<HTMLDivElement>(null);
 
   const list = getList(listId);
+  const cards = getListCards(listId);
 
   const handleAddCard = () => {
     addCard(listId, 'New card');
@@ -78,7 +79,7 @@ const StackCard = ({ listId }: Props) => {
                 alignItems: 'center',
               }}
             >
-              {list.cards.map((card) => (
+              {cards.map((card) => (
                 <Card key={card.id} listId={listId} cardId={card.id} />
               ))}
 

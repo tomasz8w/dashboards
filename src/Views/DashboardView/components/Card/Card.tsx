@@ -15,7 +15,7 @@ type Props = {
 const Card = ({ listId, cardId }: Props) => {
   const { getCard } = useDashboardStore();
 
-  const card = getCard(listId, cardId);
+  const card = getCard(cardId);
 
   const showModal = () => {
     NiceModal.show(CardModal, { listId, cardId });

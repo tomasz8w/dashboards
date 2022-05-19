@@ -5,40 +5,40 @@ import { persist } from 'zustand/middleware';
 
 type Card = {
   id: string;
+  listId: string;
   title: string;
   creationDate: number;
   description: string;
+  order: number;
 };
 
 export type List = {
   id: string;
   title: string;
   order: number;
-  cards: Card[];
 };
 
 type ListState = {
   lists: List[];
+  cards: Card[];
   getListsSorted: () => List[];
   getList: (listId: string) => List | undefined;
   swapListOrder: (listA: string, listB: string) => void;
   createList: (title: string) => void;
   deleteList: (listId: string) => void;
   changeListTitle: (listId: string, newTitle: string) => void;
+  getListCards: (listId: string) => Card[];
   addCard: (listId: string, title: string) => void;
-  getCard: (listId: string, cardId: string) => Card | undefined;
-  changeCardTitle: (listId: string, cardId: string, newTitle: string) => void;
-  changeCardDescription: (
-    listId: string,
-    cardId: string,
-    newDescription: string
-  ) => void;
+  getCard: (cardId: string) => Card | undefined;
+  changeCardTitle: (cardId: string, newTitle: string) => void;
+  changeCardDescription: (cardId: string, newDescription: string) => void;
 };
 
 export const useDashboardStore = create<ListState>(
   persist(
     (set, get) => ({
       lists: [],
+      cards: [],
       getListsSorted: () => get().lists.sort((a, b) => a.order - b.order),
       getList: (listId) => get().lists.find((list) => list.id === listId),
       swapListOrder: (listA, listB) =>
@@ -67,7 +67,6 @@ export const useDashboardStore = create<ListState>(
               id: uuidv4(),
               title,
               order: state.lists.length,
-              cards: [],
             } as List,
           ],
         })),
@@ -90,68 +89,45 @@ export const useDashboardStore = create<ListState>(
             return list;
           }),
         })),
+      getListCards: (listId) =>
+        get().cards.filter((card) => card.listId === listId),
       addCard: (listId, title) =>
         set((state) => ({
-          lists: state.lists.map((list) => {
-            if (list.id === listId) {
+          cards: [
+            ...state.cards,
+            {
+              id: uuidv4(),
+              listId,
+              title,
+              creationDate: Date.now(),
+              description: '',
+              order: state.getListCards(listId).length,
+            },
+          ],
+        })),
+      getCard: (cardId) => get().cards.find((card) => card.id === cardId),
+      changeCardTitle: (cardId, newTitle) =>
+        set((state) => ({
+          cards: state.cards.map((card) => {
+            if (card.id === cardId) {
               return {
-                ...list,
-                cards: [
-                  ...list.cards,
-                  {
-                    id: uuidv4(),
-                    title,
-                    creationDate: Date.now(),
-                    description: '',
-                  },
-                ],
+                ...card,
+                title: newTitle,
               };
             }
-            return list;
+            return card;
           }),
         })),
-      getCard: (listId, cardId) =>
-        get()
-          .getList(listId)
-          ?.cards.find((card) => card.id === cardId),
-      changeCardTitle: (listId, cardId, newTitle) =>
+      changeCardDescription: (cardId, newDescription) =>
         set((state) => ({
-          lists: state.lists.map((list) => {
-            if (list.id === listId) {
+          cards: state.cards.map((card) => {
+            if (card.id === cardId) {
               return {
-                ...list,
-                cards: list.cards.map((card) => {
-                  if (card.id === cardId) {
-                    return {
-                      ...card,
-                      title: newTitle,
-                    };
-                  }
-                  return card;
-                }),
+                ...card,
+                title: newDescription,
               };
             }
-            return list;
-          }),
-        })),
-      changeCardDescription: (listId, cardId, newDescription) =>
-        set((state) => ({
-          lists: state.lists.map((list) => {
-            if (list.id === listId) {
-              return {
-                ...list,
-                cards: list.cards.map((card) => {
-                  if (card.id === cardId) {
-                    return {
-                      ...card,
-                      description: newDescription,
-                    };
-                  }
-                  return card;
-                }),
-              };
-            }
-            return list;
+            return card;
           }),
         })),
     }),

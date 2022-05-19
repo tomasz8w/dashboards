@@ -13,7 +13,7 @@ const CardModalHeader = ({ cardId, listId }: Props) => {
   const { changeCardTitle, getList, getCard } = useDashboardStore();
 
   const list = getList(listId);
-  const card = getCard(listId, cardId);
+  const card = getCard(cardId);
 
   if (!card) return null;
 
@@ -23,9 +23,7 @@ const CardModalHeader = ({ cardId, listId }: Props) => {
         <AssignmentIcon />
         <EditableTextField
           sx={{ fontWeight: 500, fontSize: '1.5rem', pl: 1 }}
-          onEdited={(newTitle: string) =>
-            changeCardTitle(listId, cardId, newTitle)
-          }
+          onEdited={(newTitle: string) => changeCardTitle(cardId, newTitle)}
           text={card.title}
         />
       </Box>
