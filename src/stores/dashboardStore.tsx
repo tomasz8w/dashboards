@@ -1,6 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { uid } from 'react-uid';
-
+import { v4 as uuidv4 } from 'uuid';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -14,11 +13,13 @@ type Card = {
 type List = {
   id: string;
   title: string;
+  order: number;
   cards: Card[];
 };
 
 type ListState = {
   lists: List[];
+  getListsSorted: () => List[];
   getList: (listId: string) => List | undefined;
   createList: (title: string) => void;
   deleteList: (listId: string) => void;
@@ -37,21 +38,26 @@ export const useDashboardStore = create<ListState>(
   persist(
     (set, get) => ({
       lists: [],
+      getListsSorted: () => get().lists.sort((a, b) => a.order - b.order),
       getList: (listId) => get().lists.find((list) => list.id === listId),
       createList: (title) =>
         set((state) => ({
           lists: [
             ...state.lists,
             {
-              id: uid(`${title}_${state.lists.length}`),
+              id: uuidv4(),
               title,
+              order: state.lists.length,
               cards: [],
             } as List,
           ],
         })),
       deleteList: (listId) =>
         set((state) => ({
-          lists: state.lists.filter((list) => list.id !== listId),
+          lists: state
+            .getListsSorted()
+            .filter((list) => list.id !== listId)
+            .map((list, index) => ({ ...list, order: index })),
         })),
       changeListTitle: (listId, newTitle) =>
         set((state) => ({
@@ -74,7 +80,7 @@ export const useDashboardStore = create<ListState>(
                 cards: [
                   ...list.cards,
                   {
-                    id: uid(`${listId}_${title}_${list.cards.length}`),
+                    id: uuidv4(),
                     title,
                     creationDate: Date.now(),
                     description: '',

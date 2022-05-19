@@ -8,7 +8,9 @@ import { useDashboardStore } from 'stores/dashboardStore';
 import StackCard from './components/StackCard';
 
 const DashboardView = () => {
-  const { lists, createList } = useDashboardStore();
+  const { getListsSorted, createList } = useDashboardStore();
+
+  const lists = getListsSorted();
 
   const handleCreateList = () => {
     createList('New List');
