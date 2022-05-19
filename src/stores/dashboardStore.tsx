@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 
-type Card = {
+export type Card = {
   id: string;
   listId: string;
   title: string;
@@ -32,6 +32,7 @@ type ListState = {
   getCard: (cardId: string) => Card | undefined;
   changeCardTitle: (cardId: string, newTitle: string) => void;
   changeCardDescription: (cardId: string, newDescription: string) => void;
+  swapCardOrder: (cardA: string, cardB: string) => void;
 };
 
 export const useDashboardStore = create<ListState>(
@@ -76,6 +77,7 @@ export const useDashboardStore = create<ListState>(
             .getListsSorted()
             .filter((list) => list.id !== listId)
             .map((list, index) => ({ ...list, order: index })),
+          cards: state.cards.filter((card) => card.listId !== listId),
         })),
       changeListTitle: (listId, newTitle) =>
         set((state) => ({
@@ -90,7 +92,9 @@ export const useDashboardStore = create<ListState>(
           }),
         })),
       getListCards: (listId) =>
-        get().cards.filter((card) => card.listId === listId),
+        get()
+          .cards.filter((card) => card.listId === listId)
+          .sort((a, b) => a.order - b.order),
       addCard: (listId, title) =>
         set((state) => ({
           cards: [
@@ -124,7 +128,25 @@ export const useDashboardStore = create<ListState>(
             if (card.id === cardId) {
               return {
                 ...card,
-                title: newDescription,
+                description: newDescription,
+              };
+            }
+            return card;
+          }),
+        })),
+      swapCardOrder: (cardA, cardB) =>
+        set((state) => ({
+          cards: state.cards.map((card) => {
+            if (card.id === cardA) {
+              return {
+                ...card,
+                order: state.getCard(cardB)?.order ?? card.order,
+              };
+            }
+            if (card.id === cardB) {
+              return {
+                ...card,
+                order: state.getCard(cardA)?.order ?? card.order,
               };
             }
             return card;

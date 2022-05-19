@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
 
 import NiceModal from '@ebay/nice-modal-react';
 import { Edit as EditIcon } from '@mui/icons-material';
 import { ButtonBase, Paper, Typography } from '@mui/material';
-import { useDashboardStore } from 'stores/dashboardStore';
+import { useDashboardStore, Card as TCard } from 'stores/dashboardStore';
 
 import CardModal from '../CardModal';
 
@@ -13,13 +14,37 @@ type Props = {
 };
 
 const Card = ({ listId, cardId }: Props) => {
-  const { getCard } = useDashboardStore();
+  const { getCard, swapCardOrder } = useDashboardStore();
+  const ref = useRef<HTMLDivElement>(null);
 
   const card = getCard(cardId);
 
   const showModal = () => {
     NiceModal.show(CardModal, { listId, cardId });
   };
+
+  const [{ isDragging }, dragRef] = useDrag(() => ({
+    type: 'card',
+    item: card,
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  }));
+
+  const [, dropRef] = useDrop({
+    accept: 'card',
+    hover: (item: TCard) => {
+      if (card === undefined) return;
+      if (item.id === card.id) return;
+
+      // for now, only change order around single list
+      if (item.listId !== card.listId) return;
+
+      swapCardOrder(item.id, card.id);
+    },
+  });
+
+  dragRef(dropRef(ref));
 
   return (
     <ButtonBase
@@ -28,7 +53,9 @@ const Card = ({ listId, cardId }: Props) => {
     >
       <Paper
         component="div"
+        ref={ref}
         sx={{
+          opacity: isDragging ? 0 : 1,
           display: 'flex',
           flex: 'auto',
           alignItems: 'center',
