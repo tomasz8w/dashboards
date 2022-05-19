@@ -5,8 +5,8 @@ import {
   Delete as DeleteIcon,
 } from '@mui/icons-material';
 import { Box, IconButton, Menu, MenuItem } from '@mui/material';
-import { useDashboardStore } from 'stores/dashboardStore';
 import EditableTextField from 'App/EditableTextField';
+import { useDashboardStore } from 'stores/dashboardStore';
 
 type Props = {
   title: string;
@@ -15,9 +15,9 @@ type Props = {
 
 const StackCardHeader = ({ title, listId }: Props) => {
   const { deleteList, changeListTitle } = useDashboardStore();
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleOpenMenu = (event: any) => {
+  const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleCloseMenu = () => {

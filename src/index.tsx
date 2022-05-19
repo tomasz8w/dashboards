@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
 import NiceModal from '@ebay/nice-modal-react';
 
 import './index.css';
