@@ -10,7 +10,7 @@ type Card = {
   description: string;
 };
 
-type List = {
+export type List = {
   id: string;
   title: string;
   order: number;
@@ -21,6 +21,7 @@ type ListState = {
   lists: List[];
   getListsSorted: () => List[];
   getList: (listId: string) => List | undefined;
+  swapListOrder: (listA: string, listB: string) => void;
   createList: (title: string) => void;
   deleteList: (listId: string) => void;
   changeListTitle: (listId: string, newTitle: string) => void;
@@ -40,6 +41,24 @@ export const useDashboardStore = create<ListState>(
       lists: [],
       getListsSorted: () => get().lists.sort((a, b) => a.order - b.order),
       getList: (listId) => get().lists.find((list) => list.id === listId),
+      swapListOrder: (listA, listB) =>
+        set((state) => ({
+          lists: state.lists.map((list) => {
+            if (list.id === listA) {
+              return {
+                ...list,
+                order: state.getList(listB)?.order ?? list.order,
+              };
+            }
+            if (list.id === listB) {
+              return {
+                ...list,
+                order: state.getList(listA)?.order ?? list.order,
+              };
+            }
+            return list;
+          }),
+        })),
       createList: (title) =>
         set((state) => ({
           lists: [
