@@ -14,7 +14,7 @@ type Props = {
 };
 
 const Card = ({ listId, cardId }: Props) => {
-  const { getCard, swapCardOrder } = useDashboardStore();
+  const { getCard, swapCardOrder, changeCardList } = useDashboardStore();
   const ref = useRef<HTMLDivElement>(null);
 
   const card = getCard(cardId);
@@ -37,8 +37,10 @@ const Card = ({ listId, cardId }: Props) => {
       if (card === undefined) return;
       if (item.id === card.id) return;
 
-      // for now, only change order around single list
-      if (item.listId !== card.listId) return;
+      if (item.listId !== card.listId) {
+        changeCardList(item.id, card.listId);
+        return;
+      }
 
       swapCardOrder(item.id, card.id);
     },

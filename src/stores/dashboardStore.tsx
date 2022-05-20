@@ -18,9 +18,12 @@ export type List = {
   order: number;
 };
 
-type ListState = {
+type State = {
   lists: List[];
   cards: Card[];
+};
+type Actions = {
+  resetStore: () => void;
   getListsSorted: () => List[];
   getList: (listId: string) => List | undefined;
   swapListOrder: (listA: string, listB: string) => void;
@@ -33,13 +36,20 @@ type ListState = {
   changeCardTitle: (cardId: string, newTitle: string) => void;
   changeCardDescription: (cardId: string, newDescription: string) => void;
   swapCardOrder: (cardA: string, cardB: string) => void;
+  changeCardList: (cardId: string, destListId: string) => void;
 };
 
-export const useDashboardStore = create<ListState>(
+const initialState: State = {
+  lists: [],
+  cards: [],
+};
+
+export const useDashboardStore = create<State & Actions>(
   persist(
     (set, get) => ({
-      lists: [],
-      cards: [],
+      ...initialState,
+
+      resetStore: () => set({ ...initialState }),
       getListsSorted: () => get().lists.sort((a, b) => a.order - b.order),
       getList: (listId) => get().lists.find((list) => list.id === listId),
       swapListOrder: (listA, listB) =>
@@ -102,7 +112,7 @@ export const useDashboardStore = create<ListState>(
             {
               id: uuidv4(),
               listId,
-              title,
+              title: `Karta ${state.getListCards(listId).length}`,
               creationDate: Date.now(),
               description: '',
               order: state.getListCards(listId).length,
@@ -152,6 +162,30 @@ export const useDashboardStore = create<ListState>(
             return card;
           }),
         })),
+      changeCardList: (cardId, destListId) =>
+        set((state) => {
+          const srcCard = state.cards.find((card) => card.id === cardId);
+          if (!srcCard) return { cards: [...state.cards] };
+          // change listId and assign order on moving card
+          const movingCard = {
+            ...srcCard,
+            listId: destListId,
+            order: state.getListCards(destListId).length,
+          };
+          // reorder cards on src list
+          const reorderSrcListCards = state
+            .getListCards(srcCard.listId)
+            .map((card, index) => {
+              return { ...card, order: index };
+            })
+            .filter((card) => card.id !== cardId);
+          const rest = state.cards.filter(
+            (card) => card.id !== cardId && card.listId !== srcCard.listId
+          );
+          return {
+            cards: [...rest, ...reorderSrcListCards, movingCard],
+          };
+        }),
     }),
     {
       name: 'store',

@@ -1,23 +1,27 @@
 import React from 'react';
 
-import { Menu as MenuIcon } from '@mui/icons-material';
+import { RestartAlt as RestartIcon } from '@mui/icons-material';
 import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
+import { useDashboardStore } from 'stores/dashboardStore';
 
-const Titlebar = () => (
-  <AppBar position="static">
-    <Toolbar>
-      <IconButton
-        color="inherit"
-        size="large"
-        edge="start"
-        aria-label="menu"
-        sx={{ mr: 2 }}
-      >
-        <MenuIcon />
-      </IconButton>
-      <Typography variant="h6">Dashboards</Typography>
-    </Toolbar>
-  </AppBar>
-);
+const Titlebar = () => {
+  const { resetStore } = useDashboardStore();
+  return (
+    <AppBar position="static">
+      <Toolbar>
+        <IconButton
+          color="inherit"
+          size="large"
+          edge="start"
+          sx={{ mr: 2 }}
+          onClick={() => resetStore()}
+        >
+          <RestartIcon />
+        </IconButton>
+        <Typography variant="h6">Dashboards</Typography>
+      </Toolbar>
+    </AppBar>
+  );
+};
 
 export default Titlebar;
