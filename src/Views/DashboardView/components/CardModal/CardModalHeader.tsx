@@ -1,7 +1,10 @@
 import React from 'react';
 
-import { AssignmentOutlined as AssignmentIcon } from '@mui/icons-material';
-import { Box, Typography } from '@mui/material';
+import {
+  AssignmentOutlined as AssignmentIcon,
+  Delete as DeleteIcon,
+} from '@mui/icons-material';
+import { Box, IconButton, Typography } from '@mui/material';
 import EditableTextField from 'App/EditableTextField';
 import { useDashboardStore } from 'stores/dashboardStore';
 
@@ -26,6 +29,9 @@ const CardModalHeader = ({ cardId, listId }: Props) => {
           onEdited={(newTitle: string) => changeCardTitle(cardId, newTitle)}
           text={card.title}
         />
+        <IconButton sx={{ ml: 'auto' }}>
+          <DeleteIcon color="error" />
+        </IconButton>
       </Box>
       <Typography
         sx={{ px: 4 }}
