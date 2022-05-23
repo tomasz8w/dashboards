@@ -13,7 +13,7 @@ type Props = {
   listId: string;
 };
 const CardModalHeader = ({ cardId, listId }: Props) => {
-  const { changeCardTitle, getList, getCard } = useDashboardStore();
+  const { changeCardTitle, getList, getCard, deleteCard } = useDashboardStore();
 
   const list = getList(listId);
   const card = getCard(cardId);
@@ -29,7 +29,7 @@ const CardModalHeader = ({ cardId, listId }: Props) => {
           onEdited={(newTitle: string) => changeCardTitle(cardId, newTitle)}
           text={card.title}
         />
-        <IconButton sx={{ ml: 'auto' }}>
+        <IconButton sx={{ ml: 'auto' }} onClick={() => deleteCard(card.id)}>
           <DeleteIcon color="error" />
         </IconButton>
       </Box>

@@ -31,14 +31,15 @@ export default NiceModal.create(({ listId, cardId }: ModalProps) => {
       onClose={modal.remove}
       sx={{
         width: '40%',
-        height: '50%',
+        maxHeight: '80%',
         top: '15%',
         left: '30%',
         display: 'flex',
         flexDirection: 'column',
+        overflowY: 'auto',
       }}
     >
-      <Paper sx={{ flex: 1, p: 1, backgroundColor: '#F6F4F5' }}>
+      <Paper sx={{ flex: '0 1 auto', p: 1, backgroundColor: '#F6F4F5' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mr: 1 }}>
           <CardModalHeader listId={listId} cardId={cardId} />
           <CardModalDescription cardId={cardId} />

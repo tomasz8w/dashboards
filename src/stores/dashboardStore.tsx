@@ -33,6 +33,7 @@ type Actions = {
   getListCards: (listId: string) => Card[];
   addCard: (listId: string, title: string) => void;
   getCard: (cardId: string) => Card | undefined;
+  deleteCard: (cardId: string) => void;
   changeCardTitle: (cardId: string, newTitle: string) => void;
   changeCardDescription: (cardId: string, newDescription: string) => void;
   swapCardOrder: (cardA: string, cardB: string) => void;
@@ -131,6 +132,10 @@ export const useDashboardStore = create<State & Actions>(
             }
             return card;
           }),
+        })),
+      deleteCard: (cardId: string) =>
+        set((state) => ({
+          cards: [...state.cards.filter((card) => card.id !== cardId)],
         })),
       changeCardDescription: (cardId, newDescription) =>
         set((state) => ({
