@@ -5,7 +5,7 @@ import { Box, Button } from '@mui/material';
 import ViewContainer from 'App/ViewContainer';
 import { useDashboardStore } from 'stores/dashboardStore';
 
-import StackCard from './components/StackCard';
+import List from './components/List';
 
 const DashboardView = () => {
   const { getListsSorted, createList } = useDashboardStore();
@@ -28,7 +28,7 @@ const DashboardView = () => {
         }}
       >
         {lists?.map((list) => (
-          <StackCard key={list.id} listId={list.id} />
+          <List key={list.id} listId={list.id} />
         ))}
 
         <Button onClick={handleCreateList} startIcon={<AddIcon />}>

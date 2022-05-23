@@ -1,47 +1,28 @@
-import React, { useRef } from 'react';
-import { useDrag, useDrop } from 'react-dnd';
+import React from 'react';
 
 import { Add as AddIcon } from '@mui/icons-material';
 import { Box, Button, Paper } from '@mui/material';
-import { useDashboardStore, List } from 'stores/dashboardStore';
+import { useDashboardStore } from 'stores/dashboardStore';
 
 import Card from '../Card';
-import StackCardHeader from './StackCardHeader';
+import ListHeader from './ListHeader';
+import useDragAndDropList from './useDragAndDropList';
 
 type Props = {
   listId: string;
 };
 
-const StackCard = ({ listId }: Props) => {
+const List = ({ listId }: Props) => {
   const { getList, addCard, swapListOrder, getListCards } = useDashboardStore();
-  const ref = useRef<HTMLDivElement>(null);
 
   const list = getList(listId);
   const cards = getListCards(listId);
 
+  const { ref, isDragging } = useDragAndDropList(list, swapListOrder);
+
   const handleAddCard = () => {
     addCard(listId, 'New card');
   };
-
-  const [{ isDragging }, dragRef] = useDrag(() => ({
-    type: 'stack-card',
-    item: list,
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  }));
-
-  const [, dropRef] = useDrop({
-    accept: 'stack-card',
-    hover: (item: List) => {
-      if (list === undefined) return;
-      if (item.id === list.id) return;
-
-      swapListOrder(item.id, list.id);
-    },
-  });
-
-  dragRef(dropRef(ref));
 
   return (
     <Paper
@@ -69,7 +50,7 @@ const StackCard = ({ listId }: Props) => {
       >
         {list && (
           <>
-            <StackCardHeader title={list.title} listId={listId} />
+            <ListHeader title={list.title} listId={listId} />
             <Box
               sx={{
                 display: 'flex',
@@ -94,4 +75,4 @@ const StackCard = ({ listId }: Props) => {
   );
 };
 
-export default StackCard;
+export default List;

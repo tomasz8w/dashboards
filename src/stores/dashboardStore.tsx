@@ -1,22 +1,8 @@
 /* eslint-disable import/prefer-default-export */
+import { List, Card } from 'models';
 import { v4 as uuidv4 } from 'uuid';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
-
-export type Card = {
-  id: string;
-  listId: string;
-  title: string;
-  creationDate: number;
-  description: string;
-  order: number;
-};
-
-export type List = {
-  id: string;
-  title: string;
-  order: number;
-};
 
 type State = {
   lists: List[];
@@ -180,9 +166,7 @@ export const useDashboardStore = create<State & Actions>(
           // reorder cards on src list
           const reorderSrcListCards = state
             .getListCards(srcCard.listId)
-            .map((card, index) => {
-              return { ...card, order: index };
-            })
+            .map((card, index) => ({ ...card, order: index }))
             .filter((card) => card.id !== cardId);
           const rest = state.cards.filter(
             (card) => card.id !== cardId && card.listId !== srcCard.listId
