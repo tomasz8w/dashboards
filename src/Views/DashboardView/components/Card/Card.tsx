@@ -52,7 +52,6 @@ const Card = ({ listId, cardId }: Props) => {
             display: 'none',
           },
           p: 1,
-          backgroundColor: 'action.disabledBackground',
         }}
       >
         <Typography>{card?.title}</Typography>

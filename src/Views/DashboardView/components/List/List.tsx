@@ -41,12 +41,13 @@ const List = ({ listId }: Props) => {
         elevation={2}
         sx={{
           opacity: isDragging ? 0 : 1,
-          transition: 'background-color 250ms',
+          transition: 'opacity 300ms',
           display: 'flex',
           flexDirection: 'column',
           p: 1,
           flex: 'auto',
           justifyContent: 'center',
+          backgroundColor: 'rgb(245, 245, 245)',
         }}
       >
         {list && (
@@ -57,7 +58,7 @@ const List = ({ listId }: Props) => {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 0.5,
-                p: 1,
+                p: 0.2,
                 alignItems: 'center',
                 position: 'relative',
               }}
