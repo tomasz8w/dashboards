@@ -5,6 +5,7 @@ import { Box, Button, Paper } from '@mui/material';
 import { useDashboardStore } from 'stores/dashboardStore';
 
 import Card from '../Card';
+import CardPlaceholder from '../Card/CardPlaceholder';
 import ListHeader from './ListHeader';
 import useDragAndDropList from './useDragAndDropList';
 
@@ -58,8 +59,10 @@ const List = ({ listId }: Props) => {
                 gap: 0.5,
                 p: 1,
                 alignItems: 'center',
+                position: 'relative',
               }}
             >
+              {cards.length === 0 && <CardPlaceholder listId={listId} />}
               {cards.map((card) => (
                 <Card key={card.id} listId={listId} cardId={card.id} />
               ))}
