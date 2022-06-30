@@ -23,9 +23,8 @@ const CardModalHeader = ({ cardId, listId }: Props) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <AssignmentIcon />
         <EditableTextField
-          sx={{ fontWeight: 500, fontSize: '1.5rem', pl: 1 }}
+          sx={{ fontWeight: 600, fontSize: '1.5rem', pl: 1 }}
           onEdited={(newTitle: string) => changeCardTitle(cardId, newTitle)}
           text={card.title}
         />

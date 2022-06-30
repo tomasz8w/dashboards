@@ -40,7 +40,7 @@ export default NiceModal.create(({ listId, cardId }: ModalProps) => {
         overflowY: 'auto',
       }}
     >
-      <Paper sx={{ flex: '0 1 auto', p: 1, backgroundColor: '#F6F4F5' }}>
+      <Paper sx={{ flex: '0 1 auto', p: 1 }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mr: 1 }}>
           <CardModalHeader listId={listId} cardId={cardId} />
           <CardModalDescription cardId={cardId} />

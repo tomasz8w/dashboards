@@ -10,18 +10,17 @@ import theme from './theme';
 import DashboardView from './Views/DashboardView';
 
 const App = () => (
-  <CssBaseline>
-    <ThemeProvider theme={theme}>
-      <DndProvider backend={HTML5Backend}>
-        <Router>
-          <Titlebar />
-          <Routes>
-            <Route path="/" element={<DashboardView />} />
-          </Routes>
-        </Router>
-      </DndProvider>
-    </ThemeProvider>
-  </CssBaseline>
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <DndProvider backend={HTML5Backend}>
+      <Router>
+        <Titlebar />
+        <Routes>
+          <Route path="/" element={<DashboardView />} />
+        </Routes>
+      </Router>
+    </DndProvider>
+  </ThemeProvider>
 );
 
 export default App;

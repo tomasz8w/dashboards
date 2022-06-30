@@ -33,8 +33,7 @@ const CardModalDescription = ({ cardId }: Props) => {
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <DescriptionIcon />
-        <Typography sx={{ fontWeight: 500, fontSize: '1.2rem', pl: 1 }}>
+        <Typography variant="subtitle2" sx={{ pl: 1 }}>
           Opis karty
         </Typography>
         <IconButton sx={{ ml: 'auto' }} onClick={handleToggleEditMode}>

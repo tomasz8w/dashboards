@@ -40,6 +40,7 @@ const StackCardHeader = ({ title, listId }: Props) => {
       }}
     >
       <EditableTextField
+        sx={{ fontSize: '1.2rem', fontWeight: '500' }}
         text={title}
         onEdited={(newTitle) => changeListTitle(listId, newTitle)}
       />

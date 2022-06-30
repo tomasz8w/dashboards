@@ -61,7 +61,7 @@ const Card = ({ listId, cardId }: Props) => {
             flex: 'auto',
           }}
         >
-          <Typography>{card?.title}</Typography>
+          <Typography fontWeight={500}>{card?.title}</Typography>
           <EditIcon sx={{ fontSize: '1.2rem' }} />
         </Box>
         <Typography variant="body2" sx={{ display: 'flex', textAlign: 'left' }}>
