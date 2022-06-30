@@ -31,10 +31,11 @@ export default NiceModal.create(({ listId, cardId }: ModalProps) => {
       open={modal.visible}
       onClose={modal.remove}
       sx={{
-        width: '40%',
+        width: { xs: '80%', md: '50%' },
+        left: { xs: '10%', md: '25%' },
+        maxWidth: '700px',
         maxHeight: '80vh',
-        top: '15%',
-        left: '30%',
+        top: '5%',
         display: 'flex',
         flexDirection: 'column',
       }}
