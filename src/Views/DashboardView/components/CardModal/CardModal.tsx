@@ -5,8 +5,8 @@ import { Box, Modal, Paper, Typography } from '@mui/material';
 import { useDashboardStore } from 'stores/dashboardStore';
 
 import CardModalContent from './CardModalContent';
-import CardModalHeader from './CardModalHeader';
 import CardModalDescription from './CardModalDescription';
+import CardModalHeader from './CardModalHeader';
 
 type ModalProps = {
   listId: string;

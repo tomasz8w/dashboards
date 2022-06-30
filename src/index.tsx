@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import NiceModal from '@ebay/nice-modal-react';
-
 import App from './App';
 
 const root = ReactDOM.createRoot(
@@ -10,8 +8,6 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <NiceModal.Provider>
-      <App />
-    </NiceModal.Provider>
+    <App />
   </React.StrictMode>
 );

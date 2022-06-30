@@ -3,6 +3,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
+import NiceModal from '@ebay/nice-modal-react';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 
 import Titlebar from './App/Titlebar';
@@ -13,12 +14,14 @@ const App = () => (
   <ThemeProvider theme={theme}>
     <CssBaseline />
     <DndProvider backend={HTML5Backend}>
-      <Router>
-        <Titlebar />
-        <Routes>
-          <Route path="/" element={<DashboardView />} />
-        </Routes>
-      </Router>
+      <NiceModal.Provider>
+        <Router>
+          <Titlebar />
+          <Routes>
+            <Route path="/" element={<DashboardView />} />
+          </Routes>
+        </Router>
+      </NiceModal.Provider>
     </DndProvider>
   </ThemeProvider>
 );
