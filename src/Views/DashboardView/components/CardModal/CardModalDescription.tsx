@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-import ReactMarkdown from 'react-markdown';
 
-import {
-  DescriptionOutlined as DescriptionIcon,
-  Edit as EditIcon,
-} from '@mui/icons-material';
+import { Edit as EditIcon } from '@mui/icons-material';
 import { Box, IconButton, Typography } from '@mui/material';
 import EditableTextField from 'App/EditableTextField';
 import { useDashboardStore } from 'stores/dashboardStore';
@@ -33,20 +29,19 @@ const CardModalDescription = ({ cardId }: Props) => {
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Typography variant="subtitle2" sx={{ pl: 1 }}>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           Opis karty
         </Typography>
         <IconButton sx={{ ml: 'auto' }} onClick={handleToggleEditMode}>
-          <EditIcon color="info" />
+          <EditIcon />
         </IconButton>
       </Box>
       {editMode ? (
         <EditableTextField
           maxLength={255}
           sx={{
-            mx: 3,
             p: 1,
-            backgroundColor: '#fff',
+            backgroundColor: 'grey.200',
           }}
           onEdited={(newDescription: string) =>
             changeCardDescription(cardId, newDescription)
@@ -54,21 +49,7 @@ const CardModalDescription = ({ cardId }: Props) => {
           text={card.description}
         />
       ) : (
-        <Box
-          sx={{
-            mx: 3,
-            p: 1,
-            code: {
-              display: 'inline-block',
-              width: '100%',
-              backgroundColor: 'lightgray',
-              borderRadius: '3px',
-              p: 1,
-            },
-          }}
-        >
-          <Typography>{card.description}</Typography>
-        </Box>
+        <Typography>{card.description}</Typography>
       )}
     </Box>
   );

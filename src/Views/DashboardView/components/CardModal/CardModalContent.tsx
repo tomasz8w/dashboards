@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
-import {
-  DescriptionOutlined as DescriptionIcon,
-  Edit as EditIcon,
-} from '@mui/icons-material';
+import { Edit as EditIcon } from '@mui/icons-material';
 import { Box, IconButton, Typography } from '@mui/material';
 import EditableTextField from 'App/EditableTextField';
 import { useDashboardStore } from 'stores/dashboardStore';
@@ -32,18 +29,18 @@ const CardModalContent = ({ cardId }: Props) => {
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Typography variant="subtitle2" sx={{ pl: 1 }}>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           Treść
         </Typography>
         <IconButton sx={{ ml: 'auto' }} onClick={handleToggleEditMode}>
-          <EditIcon color="info" />
+          <EditIcon />
         </IconButton>
       </Box>
       {editMode ? (
         <EditableTextField
           multiline
           rows={10}
-          sx={{ mx: 3, p: 1, backgroundColor: '#fff' }}
+          sx={{ backgroundColor: 'grey.200' }}
           onEdited={(newContent: string) =>
             changeCardContent(cardId, newContent)
           }
@@ -52,10 +49,12 @@ const CardModalContent = ({ cardId }: Props) => {
       ) : (
         <Box
           sx={{
-            mx: 3,
-            p: 1,
+            maxHeight: '40ch',
+            overflowY: 'auto',
+            width: '100%',
             code: {
               display: 'inline-block',
+              whiteSpace: 'pre-wrap',
               width: '100%',
               backgroundColor: 'lightgray',
               borderRadius: '3px',
