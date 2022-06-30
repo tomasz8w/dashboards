@@ -22,6 +22,7 @@ type Actions = {
   deleteCard: (cardId: string) => void;
   changeCardTitle: (cardId: string, newTitle: string) => void;
   changeCardDescription: (cardId: string, newDescription: string) => void;
+  changeCardContent: (cardId: string, newContent: string) => void;
   swapCardOrder: (cardA: string, cardB: string) => void;
   changeCardList: (cardId: string, destListId: string) => void;
 };
@@ -102,6 +103,7 @@ export const useDashboardStore = create<State & Actions>(
               title: `Karta ${state.getListCards(listId).length}`,
               creationDate: Date.now(),
               description: '',
+              content: '',
               order: state.getListCards(listId).length,
             },
           ],
@@ -130,6 +132,18 @@ export const useDashboardStore = create<State & Actions>(
               return {
                 ...card,
                 description: newDescription,
+              };
+            }
+            return card;
+          }),
+        })),
+      changeCardContent: (cardId, newContent) =>
+        set((state) => ({
+          cards: state.cards.map((card) => {
+            if (card.id === cardId) {
+              return {
+                ...card,
+                content: newContent,
               };
             }
             return card;

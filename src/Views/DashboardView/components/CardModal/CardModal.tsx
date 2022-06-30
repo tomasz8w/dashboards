@@ -4,8 +4,9 @@ import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { Box, Modal, Paper, Typography } from '@mui/material';
 import { useDashboardStore } from 'stores/dashboardStore';
 
-import CardModalDescription from './CardModalDescription';
+import CardModalContent from './CardModalContent';
 import CardModalHeader from './CardModalHeader';
+import CardModalDescription from './CardModalDescription';
 
 type ModalProps = {
   listId: string;
@@ -43,6 +44,7 @@ export default NiceModal.create(({ listId, cardId }: ModalProps) => {
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mr: 1 }}>
           <CardModalHeader listId={listId} cardId={cardId} />
           <CardModalDescription cardId={cardId} />
+          <CardModalContent cardId={cardId} />
           <Typography sx={{ ml: 'auto', px: 3 }} variant="caption">
             {`Data utworzenia: ${creationDate()}`}
           </Typography>

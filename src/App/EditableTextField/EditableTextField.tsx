@@ -4,12 +4,14 @@ import { InputBase, InputProps } from '@mui/material';
 
 type Props = InputProps & {
   text: string;
+  maxLength?: number;
   onEdited: (newValue: string) => void;
 };
 
 const EditableTextField = ({
   text,
   multiline = false,
+  maxLength,
   onEdited,
   sx,
   ...other
@@ -50,6 +52,9 @@ const EditableTextField = ({
 
   return (
     <InputBase
+      inputProps={{
+        maxLength: maxLength ?? 'unset',
+      }}
       inputRef={inputRef}
       value={value}
       onClick={onClick}

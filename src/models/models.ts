@@ -4,6 +4,7 @@ export type Card = {
   title: string;
   creationDate: number;
   description: string;
+  content: string;
   order: number;
 };
 

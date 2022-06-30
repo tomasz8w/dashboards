@@ -2,7 +2,7 @@ import React from 'react';
 
 import NiceModal from '@ebay/nice-modal-react';
 import { Edit as EditIcon } from '@mui/icons-material';
-import { ButtonBase, Paper, Typography } from '@mui/material';
+import { Box, ButtonBase, Paper, Typography } from '@mui/material';
 import { useDashboardStore } from 'stores/dashboardStore';
 
 import CardModal from '../CardModal';
@@ -39,9 +39,9 @@ const Card = ({ listId, cardId }: Props) => {
         sx={{
           opacity: isDragging ? 0 : 1,
           display: 'flex',
+          flexDirection: 'column',
           flex: 'auto',
-          alignItems: 'center',
-          justifyContent: 'space-between',
+
           ':hover': {
             backgroundColor: 'action.hover',
             svg: {
@@ -54,8 +54,19 @@ const Card = ({ listId, cardId }: Props) => {
           p: 1,
         }}
       >
-        <Typography>{card?.title}</Typography>
-        <EditIcon sx={{ fontSize: '1.2rem' }} />
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            flex: 'auto',
+          }}
+        >
+          <Typography>{card?.title}</Typography>
+          <EditIcon sx={{ fontSize: '1.2rem' }} />
+        </Box>
+        <Typography variant="body2" sx={{ display: 'flex', textAlign: 'left' }}>
+          {card?.description}
+        </Typography>
       </Paper>
     </ButtonBase>
   );

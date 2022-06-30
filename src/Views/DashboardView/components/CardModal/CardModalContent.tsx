@@ -12,8 +12,8 @@ import { useDashboardStore } from 'stores/dashboardStore';
 type Props = {
   cardId: string;
 };
-const CardModalDescription = ({ cardId }: Props) => {
-  const { changeCardDescription, getCard } = useDashboardStore();
+const CardModalContent = ({ cardId }: Props) => {
+  const { changeCardContent, getCard } = useDashboardStore();
   const [editMode, setEditMode] = useState(false);
 
   const card = getCard(cardId);
@@ -29,13 +29,12 @@ const CardModalDescription = ({ cardId }: Props) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        overflowX: 'hidden',
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <DescriptionIcon />
         <Typography sx={{ fontWeight: 500, fontSize: '1.2rem', pl: 1 }}>
-          Opis karty
+          Treść
         </Typography>
         <IconButton sx={{ ml: 'auto' }} onClick={handleToggleEditMode}>
           <EditIcon color="info" />
@@ -43,16 +42,13 @@ const CardModalDescription = ({ cardId }: Props) => {
       </Box>
       {editMode ? (
         <EditableTextField
-          maxLength={255}
-          sx={{
-            mx: 3,
-            p: 1,
-            backgroundColor: '#fff',
-          }}
-          onEdited={(newDescription: string) =>
-            changeCardDescription(cardId, newDescription)
+          multiline
+          rows={10}
+          sx={{ mx: 3, p: 1, backgroundColor: '#fff' }}
+          onEdited={(newContent: string) =>
+            changeCardContent(cardId, newContent)
           }
-          text={card.description}
+          text={card.content}
         />
       ) : (
         <Box
@@ -68,10 +64,10 @@ const CardModalDescription = ({ cardId }: Props) => {
             },
           }}
         >
-          <Typography>{card.description}</Typography>
+          <ReactMarkdown>{card.content}</ReactMarkdown>
         </Box>
       )}
     </Box>
   );
 };
-export default CardModalDescription;
+export default CardModalContent;
