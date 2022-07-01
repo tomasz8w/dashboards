@@ -8,6 +8,7 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 
 import Titlebar from './App/Titlebar';
 import theme from './theme';
+import CreateDashboardView from './Views/CreateDashboardView';
 import DashboardView from './Views/DashboardView';
 
 const App = () => (
@@ -19,6 +20,7 @@ const App = () => (
           <Titlebar />
           <Routes>
             <Route path="/" element={<DashboardView />} />
+            <Route path="/createDashboard" element={<CreateDashboardView />} />
           </Routes>
         </Router>
       </NiceModal.Provider>

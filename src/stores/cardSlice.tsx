@@ -2,6 +2,7 @@ import { Card } from 'models';
 import { v4 as uuidv4 } from 'uuid';
 import { StateCreator } from 'zustand';
 
+import { DashboardSlice } from './dashboardSlice';
 import { ListSlice } from './listSlice';
 
 export interface CardSlice {
@@ -18,7 +19,7 @@ export interface CardSlice {
 }
 
 export const createCardSlice: StateCreator<
-  ListSlice & CardSlice,
+  ListSlice & CardSlice & DashboardSlice,
   [['zustand/devtools', never], ['zustand/persist', unknown]],
   [],
   CardSlice

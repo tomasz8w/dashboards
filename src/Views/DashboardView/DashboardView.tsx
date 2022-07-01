@@ -1,4 +1,5 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 
 import { Add as AddIcon } from '@mui/icons-material';
 import { Box, Button } from '@mui/material';
@@ -8,12 +9,14 @@ import { useDashboardStore } from 'stores/dashboardStore';
 import List from './components/List';
 
 const DashboardView = () => {
-  const { getListsSorted, createList } = useDashboardStore();
+  const { getListsSorted, createList, selectedDashboard } = useDashboardStore();
 
-  const lists = getListsSorted();
+  if (!selectedDashboard) return <Navigate to="/createDashboard" />;
+
+  const lists = getListsSorted(selectedDashboard);
 
   const handleCreateList = () => {
-    createList('New List');
+    createList(selectedDashboard, 'New List');
   };
 
   return (

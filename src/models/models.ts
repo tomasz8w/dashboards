@@ -10,6 +10,12 @@ export type Card = {
 
 export type List = {
   id: string;
+  dashboardId: string;
   title: string;
   order: number;
+};
+
+export type Dashboard = {
+  id: string;
+  name: string;
 };
