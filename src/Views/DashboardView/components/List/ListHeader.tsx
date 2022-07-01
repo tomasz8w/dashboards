@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import {
   MoreVert as MoreIcon,
   Delete as DeleteIcon,
+  RestartAlt as RestartIcon,
 } from '@mui/icons-material';
 import { Box, IconButton, Menu, MenuItem } from '@mui/material';
 import EditableTextField from 'App/EditableTextField';
@@ -14,7 +15,7 @@ type Props = {
 };
 
 const StackCardHeader = ({ title, listId }: Props) => {
-  const { deleteList, changeListTitle } = useDashboardStore();
+  const { deleteList, changeListTitle, clearList } = useDashboardStore();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -25,6 +26,9 @@ const StackCardHeader = ({ title, listId }: Props) => {
   };
   const handleDeleteList = () => {
     deleteList(listId);
+  };
+  const handleClearList = () => {
+    clearList(listId);
   };
 
   const isOpen = !!anchorEl;
@@ -62,6 +66,10 @@ const StackCardHeader = ({ title, listId }: Props) => {
         }}
         onClick={handleCloseMenu}
       >
+        <MenuItem onClick={handleClearList}>
+          <RestartIcon sx={{ mr: 1, color: 'warning.main' }} />
+          Clear list
+        </MenuItem>
         <MenuItem onClick={handleDeleteList}>
           <DeleteIcon sx={{ mr: 1, color: 'error.main' }} />
           Delete

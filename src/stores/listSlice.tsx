@@ -13,6 +13,7 @@ export interface ListSlice {
   swapListOrder: (listA: string, listB: string) => void;
   createList: (dashboardId: string, title: string) => void;
   deleteList: (listId: string) => void;
+  clearList: (listId: string) => void;
   changeListTitle: (listId: string, newTitle: string) => void;
 }
 
@@ -63,6 +64,10 @@ export const createListSlice: StateCreator<
       lists: state.lists.filter((list) => list.id !== listId),
       cards: state.cards.filter((card) => card.listId !== listId),
     })),
+  clearList: (listId) =>
+    get()
+      .getCardsFromList(listId)
+      .forEach((card) => get().deleteCard(card.id)),
   changeListTitle: (listId, newTitle) =>
     set((state) => ({
       lists: state.lists.map((list) => {
