@@ -64,6 +64,7 @@ const EditableTextField = ({
       onBlur={handleEditEnd}
       onKeyDown={handleKeyPressed}
       multiline
+      spellCheck={false}
       sx={{ ...sx }}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
