@@ -14,10 +14,11 @@ type Props = {
 };
 
 const List = ({ listId }: Props) => {
-  const { getList, addCard, swapListOrder, getListCards } = useDashboardStore();
+  const { getList, addCard, swapListOrder, getCardsFromList } =
+    useDashboardStore();
 
   const list = getList(listId);
-  const cards = getListCards(listId);
+  const cards = getCardsFromList(listId);
 
   const { ref, isDragging } = useDragAndDropList(list, swapListOrder);
 
