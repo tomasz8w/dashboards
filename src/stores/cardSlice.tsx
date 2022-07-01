@@ -7,7 +7,7 @@ import { ListSlice } from './listSlice';
 
 export interface CardSlice {
   cards: Card[];
-  addCard: (listId: string, title: string) => void;
+  addCard: (listId: string, title: string) => string;
   getCard: (cardId: string) => Card | undefined;
   getCardsFromList: (listId: string) => Card[];
   deleteCard: (cardId: string) => void;
@@ -25,21 +25,24 @@ export const createCardSlice: StateCreator<
   CardSlice
 > = (set, get) => ({
   cards: [],
-  addCard: (listId, title) =>
+  addCard: (listId) => {
+    const id = uuidv4();
     set((state) => ({
       cards: [
         ...state.cards,
         {
-          id: uuidv4(),
+          id,
           listId,
-          title: `Karta ${state.getCardsFromList(listId).length}`,
+          title: '',
           creationDate: Date.now(),
           description: '',
           content: '',
           order: state.getCardsFromList(listId).length,
         },
       ],
-    })),
+    }));
+    return id;
+  },
   getCard: (cardId) => get().cards.find((card) => card.id === cardId),
   getCardsFromList: (listId) =>
     get()

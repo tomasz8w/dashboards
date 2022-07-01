@@ -14,11 +14,11 @@ const CreateDashboardView = () => {
   const handleCreateClick = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (name === '') {
-      setError('Pole jest puste');
+      setError('Field is empty');
       return;
     }
     if (name.length > 40) {
-      setError('Nazwa przekracza 100 znaków');
+      setError('Name exceedes 100 characters');
       return;
     }
     if (error) setError(null);
@@ -39,7 +39,7 @@ const CreateDashboardView = () => {
           mt: 4,
         }}
       >
-        <Typography variant="body2">Nazwa nowej tablicy</Typography>
+        <Typography variant="body2">New dashboard name</Typography>
         <TextField
           sx={{ width: '40ch', mb: 2 }}
           id="name"
@@ -48,7 +48,7 @@ const CreateDashboardView = () => {
           helperText={error ?? ' '}
         />
         <Button type="submit" variant="outlined">
-          Utwórz
+          Create
         </Button>
       </Box>
     </ViewContainer>

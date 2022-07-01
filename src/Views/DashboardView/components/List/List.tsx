@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Add as AddIcon } from '@mui/icons-material';
 import { Box, Button, Paper } from '@mui/material';
@@ -16,6 +16,7 @@ type Props = {
 const List = ({ listId }: Props) => {
   const { getList, addCard, swapListOrder, getCardsFromList } =
     useDashboardStore();
+  const [createdCardId, setCreatedCardId] = useState('');
 
   const list = getList(listId);
   const cards = getCardsFromList(listId);
@@ -23,7 +24,8 @@ const List = ({ listId }: Props) => {
   const { ref, isDragging } = useDragAndDropList(list, swapListOrder);
 
   const handleAddCard = () => {
-    addCard(listId, 'New card');
+    const newCardId = addCard(listId, 'New card');
+    setCreatedCardId(newCardId);
   };
 
   return (
@@ -66,7 +68,13 @@ const List = ({ listId }: Props) => {
             >
               {cards.length === 0 && <CardPlaceholder listId={listId} />}
               {cards.map((card) => (
-                <Card key={card.id} listId={listId} cardId={card.id} />
+                <Card
+                  key={card.id}
+                  listId={listId}
+                  cardId={card.id}
+                  isNewCard={createdCardId === card.id}
+                  removeNewFlag={() => setCreatedCardId('')}
+                />
               ))}
 
               <Button startIcon={<AddIcon />} onClick={handleAddCard}>

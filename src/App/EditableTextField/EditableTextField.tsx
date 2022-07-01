@@ -5,12 +5,15 @@ import { InputBase, InputProps } from '@mui/material';
 type Props = InputProps & {
   text: string;
   maxLength?: number;
+  allowEmptyString?: boolean;
   onEdited: (newValue: string) => void;
 };
 
 const EditableTextField = ({
   text,
   multiline = false,
+  autoFocus = true,
+  allowEmptyString = false,
   maxLength,
   onEdited,
   sx,
@@ -30,6 +33,10 @@ const EditableTextField = ({
 
   const handleEditEnd = () => {
     if (inputRef) inputRef.current?.blur();
+    if (allowEmptyString) {
+      onEdited(value);
+      return;
+    }
     if (value && value !== text) onEdited(value);
   };
 
@@ -55,6 +62,7 @@ const EditableTextField = ({
       inputProps={{
         maxLength: maxLength ?? 'unset',
       }}
+      autoFocus={autoFocus}
       inputRef={inputRef}
       value={value}
       onClick={onClick}
@@ -65,7 +73,7 @@ const EditableTextField = ({
       onKeyDown={handleKeyPressed}
       multiline
       spellCheck={false}
-      sx={{ ...sx }}
+      sx={{ borderRadius: '4px', ...sx }}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     />

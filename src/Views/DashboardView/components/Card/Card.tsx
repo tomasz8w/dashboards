@@ -3,6 +3,7 @@ import React from 'react';
 import NiceModal from '@ebay/nice-modal-react';
 import { Edit as EditIcon } from '@mui/icons-material';
 import { Box, ButtonBase, Paper, Typography } from '@mui/material';
+import EditableTextField from 'App/EditableTextField';
 import { useDashboardStore } from 'stores/dashboardStore';
 
 import CardModal from '../CardModal';
@@ -11,10 +12,18 @@ import useDragAndDropCard from './useDragAndDropCard';
 type Props = {
   listId: string;
   cardId: string;
+  isNewCard: boolean;
+  removeNewFlag: () => void;
 };
 
-const Card = ({ listId, cardId }: Props) => {
-  const { getCard, swapCardOrder, changeCardList } = useDashboardStore();
+const Card = ({ listId, cardId, isNewCard, removeNewFlag }: Props) => {
+  const {
+    getCard,
+    swapCardOrder,
+    changeCardList,
+    changeCardTitle,
+    deleteCard,
+  } = useDashboardStore();
 
   const card = getCard(cardId);
 
@@ -25,7 +34,14 @@ const Card = ({ listId, cardId }: Props) => {
   );
 
   const showModal = () => {
+    if (isNewCard) return;
     NiceModal.show(CardModal, { listId, cardId });
+  };
+
+  const handleFirstEditEnd = (newName: string) => {
+    removeNewFlag();
+    if (newName === '') deleteCard(cardId);
+    changeCardTitle(cardId, newName);
   };
 
   return (
@@ -45,11 +61,11 @@ const Card = ({ listId, cardId }: Props) => {
           ':hover': {
             backgroundColor: 'action.hover',
             svg: {
-              display: 'inline',
+              opacity: 1,
             },
           },
           svg: {
-            display: 'none',
+            opacity: 0,
           },
           p: 1,
         }}
@@ -59,12 +75,25 @@ const Card = ({ listId, cardId }: Props) => {
             display: 'flex',
             justifyContent: 'space-between',
             flex: 'auto',
+            textAlign: 'left',
           }}
         >
-          <Typography fontWeight={500}>{card?.title}</Typography>
+          {card && isNewCard ? (
+            <EditableTextField
+              text={card.title}
+              placeholder="Enter card name"
+              onEdited={handleFirstEditEnd}
+              allowEmptyString
+            />
+          ) : (
+            <Typography fontWeight={500}>{card?.title}</Typography>
+          )}
           <EditIcon sx={{ fontSize: '1.2rem' }} />
         </Box>
-        <Typography variant="body2" sx={{ display: 'flex', textAlign: 'left' }}>
+        <Typography
+          variant="body2"
+          sx={{ color: 'text.secondary', textAlign: 'left' }}
+        >
           {card?.description}
         </Typography>
       </Paper>

@@ -38,6 +38,7 @@ const CardModalDescription = ({ cardId }: Props) => {
       </Box>
       {editMode ? (
         <EditableTextField
+          allowEmptyString
           maxLength={255}
           sx={{
             p: 1,

@@ -38,6 +38,7 @@ const CardModalContent = ({ cardId }: Props) => {
       </Box>
       {editMode ? (
         <EditableTextField
+          allowEmptyString
           multiline
           rows={10}
           sx={{ backgroundColor: 'grey.200' }}
